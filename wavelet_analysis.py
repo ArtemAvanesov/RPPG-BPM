@@ -24,7 +24,7 @@ def wavelet_analysis(ppg_signal, fps, wavelet=None):
     # Расчет вейвлета
     # Доступные вейвлет-функции: print(pywt.wavelist())
     coef = pywt.cwt(data = ppg_signal, scales = scales, wavelet = wavelet, sampling_period = sampling_period)[0]
-    print(coef)
+    
     # Поиск вейвлета с максимальной суммой коэффициентов (по алгоритму со статьи Huang2016 формула 13)
     max_sum = 0
     index_max = 0
