@@ -1,7 +1,6 @@
 import numpy as np
 import pywt # библиотеку нужно качать (pip install PyWavelets)
 from scipy.signal import find_peaks
-import matplotlib.pyplot as plt
 
 # Вейвлет анализ
 def wavelet_analysis(ppg_signal, fps, wavelet=None):
@@ -24,8 +23,8 @@ def wavelet_analysis(ppg_signal, fps, wavelet=None):
     
     # Расчет вейвлета
     # Доступные вейвлет-функции: print(pywt.wavelist())
-    coef, freqs = pywt.cwt(data = ppg_signal, scales = scales, wavelet = wavelet, sampling_period = sampling_period)
-    
+    coef = pywt.cwt(data = ppg_signal, scales = scales, wavelet = wavelet, sampling_period = sampling_period)[0]
+    print(coef)
     # Поиск вейвлета с максимальной суммой коэффициентов (по алгоритму со статьи Huang2016 формула 13)
     max_sum = 0
     index_max = 0
@@ -36,11 +35,6 @@ def wavelet_analysis(ppg_signal, fps, wavelet=None):
         if(sum_coef>max_sum):
             max_sum = sum_coef
             index_max = i
-    
-    # Визуальный анализ аномалий в пульсе
-    plt.figure(figsize=(30,5))
-    plt.title("Анализ аномалий в пульсе ({})".format(wavelet), fontsize = 25)
-    plt.imshow(coef)
     
     # Применение к выбранному вейвлету межпикового анализа (межпиковый анализ используется в алгоритме со статьи Huang2016)
     length_data = len(coef[index_max])
@@ -57,15 +51,5 @@ def wavelet_analysis(ppg_signal, fps, wavelet=None):
     distances_small = distances[int(len(distances)//2 - M//2) : int(len(distances)//2 - M//2 + M)]
     one_beat_time = (sum(distances_small)/len(distances_small))/fps # Время одного сердцебиения
     hr_estimated = 1/one_beat_time # Предполагаемая ЧСС
-
-    # Визуализация пиков
-    plt.figure(figsize=(30,5))
-    plt.title("Выбранный {}-вейвлет с отображением пиков".format(wavelet), fontsize = 25)
-    plt.plot(np.arange(0, len(coef[index_max])), coef[index_max], color = 'green', label = wavelet)
-    plt.plot(np.arange(0, len(coef[index_max])), ppg_signal, color = 'red', label = "signal")
   
-    plt.legend(loc = 'best', fontsize=25)
-    for item in peaks:
-        plt.axvline(x=item)
-        
     return hr_estimated  

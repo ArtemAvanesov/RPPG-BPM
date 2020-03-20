@@ -14,14 +14,6 @@ def interbeats_analysis(ppg_signal, fps):
     distances = [] # Расстояние между пиками
     for i in range(len(peaks)-1):
         distances.append(peaks[i+1] - peaks[i])   
-        
-    import numpy as np
-    import matplotlib.pyplot as plt
-    line = np.linspace(0,len(ppg_signal),len(ppg_signal))
-    plt.figure(figsize=(30,5))
-    plt.plot(line, ppg_signal)
-    for item in peaks:
-        plt.axvline(x=item)
     
     if(len(distances) == 0):
         return None
