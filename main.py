@@ -1,12 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-from chrom import chrom
-from pos import pos
-from ica import ica
-from fourier_analysis import fourier_analysis
-from interbeats_analysis import interbeats_analysis
-from wavelet_analysis import wavelet_analysis
+from first_stage.chrom import chrom
+from first_stage.pos import pos
+from first_stage.ica import ica
+from second_stage.fourier_analysis import fourier_analysis
+from second_stage.interbeats_analysis import interbeats_analysis
+from second_stage.wavelet_analysis import wavelet_analysis
 
 # Чтение исходных данных
 data = np.loadtxt('test_data.csv', delimiter='\t', unpack=False)
