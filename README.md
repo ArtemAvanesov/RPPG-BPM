@@ -1,5 +1,8 @@
 # RPPG-BPM
+![Image alt](https://github.com/ArtemAvanesov/RPPG-BPM/raw/master/principle_of_rppg.JPG)
+
 This is a project for diploma (graduate work)
+
 It is dedicated to calculating heart rate value from a video recording with a person’s face
 
 The input data are the average values of RGB-channels of face area
